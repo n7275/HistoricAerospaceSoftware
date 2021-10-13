@@ -1,0 +1,12 @@
+$LIST
+$DATE          062121
+$*     
+$*     SYSTEM READY TO RUN JOBS
+$*
+$PAUSE
+$TAPE
+$*     
+$*     RETURNING FROM JOB TAPE
+$*
+$PAUSE
+$STOP
