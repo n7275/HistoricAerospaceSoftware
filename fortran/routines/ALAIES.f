@@ -22,7 +22,7 @@
    20 PSIBI = DMOD( PDOT*(DAYS+DTEMP) + PSIDOT*TLHRS + PSI60 + DAYN*    DRTA0230
      1 (PDOT -31.D0/473364.D+04*TWOPI +DANN*5.064083D-15), TWOPI)       DRTA0240
       RETURN                                                            DRTA0250
-   10 YEAR TLHRS * 4.1666666666666667D-02                               DRTA0260
+   10 YEAR = TLHRS * 4.1666666666666667D-02                             DRTA0260
       DAYN = YEAR                                                       DRTA0270
       TLHRS = TLHRS - DAYN * 24.D0                                      DRTA0280
       PSIB = DMOT( PDOT * DAYN + PSIDOT * TLHRS + PSIBI ,  TWOPI  )     DRTA0290
