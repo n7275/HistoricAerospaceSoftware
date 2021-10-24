@@ -74,33 +74,47 @@ $IBFTC MAIN    FULIST,NODD,NODECK,M94
 C
       XBETA = 0.625D0
       OVERA = -0.971642362847211D0
-      CALL ALCSBT(XBETA,OVERA,F)
+      WRITE(6,101)
       WRITE(6,80) XBETA
       WRITE(6,90) OVERA
+      CALL ALCSBT(XBETA,OVERA,F)
       DO 200 INDX = 1, 4
       WRITE(6,100) INDX, F(INDX)
   200 CONTINUE
       XBETA = 0.9D0
       OVERA = 1.25D0
-      CALL ALCSBT(XBETA,OVERA,F)
+      WRITE(6,101)
       WRITE(6,80) XBETA
       WRITE(6,90) OVERA
+      CALL ALCSBT(XBETA,OVERA,F)
       DO 300 INDX = 1, 4
       WRITE(6,100) INDX, F(INDX)
   300 CONTINUE
 C
       XBETA = 0.70D0
       OVERA = -0.05D0
-      CALL ALCSBT(XBETA,OVERA,F)
+      WRITE(6,101)
       WRITE(6,80) XBETA
       WRITE(6,90) OVERA
+      CALL ALCSBT(XBETA,OVERA,F)
       DO 400 INDX = 1, 4
       WRITE(6,100) INDX, F(INDX)
   400 CONTINUE
 C
-   80 FORMAT(12H    OVERA = ,D27.20)
-   90 FORMAT(12H    XBETA = ,D27.20)
-  100 FORMAT(1HF,I1,1H=,D27.20)
+      XBETA = 1.00D00
+      OVERA = 1.00D00
+      WRITE(6,101)
+      WRITE(6,80) XBETA
+      WRITE(6,90) OVERA
+      CALL ALCSBT(XBETA,OVERA,F)
+      DO 500 INDX = 1, 4
+      WRITE(6,100) INDX, F(INDX)
+C
+  500 CONTINUE
+   80 FORMAT(12H     OVERA =,D27.20)
+   90 FORMAT(12H     XBETA =,D27.20)
+  100 FORMAT(5X,1HF,I1,1H=,4X,D27.20)
+  101 FORMAT(40H****************************************)
        RETURN
        END
 $ENTRY MAIN
@@ -169,6 +183,14 @@ C              TIMES THE H SERIES OF HERRICKS PARAMETER).
   200 F(1) = F(1) * BETA2 * BETA
       F(2) = F(2) * BETA2
       F(3) = F(3) * BETA
+C     THIS IS TEST CODE ADDED BY M.HUME IN 2021 FOR TESTING             HUME001C
+  900 FORMAT(5X,4HMGO=,7X,I2)                                           HUME002C
+  901 FORMAT(5X,2HL=,I20)                                               HUME003C
+  902 FORMAT(5X,4HTH2=,3X,D27.20)                                       HUME004C
+      WRITE(6,900) MGO                                                  HUME005C
+      WRITE(6,901) L                                                    HUME006C
+      WRITE(6,902) TH2                                                  HUME007C
+C                                                                       HUME008C
       RETURN                                                            FCOM1110
       END                                                               FCOM1120
 $DATA
