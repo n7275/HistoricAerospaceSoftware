@@ -1,8 +1,8 @@
 $BLOCK         BCD,0084
 $JOB           ALCSBTTEST
 $EXECUTE       IBJOB
-$IBJOB         GO, MAP, FIOCS
-$IBFTC BLOCDA  FULIST,NODD,NODECK,M94
+$IBJOB         GO, MAP, LOGIC, FIOCS
+$IBFTC BLOCDA  FULIST,DD,NODECK,M94
       BLOCK DATA
 C
 C
@@ -66,7 +66,7 @@ C
      4 5.0000000000000000D-02, 8.3333333333333333D-02,
      5 1.6666666666666667D-01, 5.0000000000000000D-01 /
       END
-$IBFTC MAIN    FULIST,NODD,NODECK,M94
+$IBFTC MAIN    FULIST,DD,NODECK,M94
       INTEGER INDX
       COMMON/BTACON/C(100)
       DIMENSION F(4)
@@ -81,6 +81,7 @@ C
       DO 200 INDX = 1, 4
       WRITE(6,100) INDX, F(INDX)
   200 CONTINUE
+C
       XBETA = 0.9D0
       OVERA = 1.25D0
       WRITE(6,101)
@@ -104,8 +105,8 @@ C
       XBETA = 1.00D00
       OVERA = 1.00D00
       WRITE(6,101)
-      WRITE(6,80) XBETA
-      WRITE(6,90) OVERA
+      WRITE(6,80) OVERA
+      WRITE(6,90) XBETA
       CALL ALCSBT(XBETA,OVERA,F)
       DO 500 INDX = 1, 4
       WRITE(6,100) INDX, F(INDX)
@@ -118,7 +119,7 @@ C
        RETURN
        END
 $ENTRY MAIN
-$IBFTC R1      FULIST,NODD,NODECK,M94
+$IBFTC R1      FULIST,DD,NODECK,M94
       SUBROUTINE ALCSBT(XBETA,OVERA,F)
 C              THIS ROUTINE TAKES BETA AND THE RECIPROCAL OF THE SEMI-
 C              MAJOR AXIS AND COMPUTES THE G SERIES (POWERS OF BETA
@@ -184,13 +185,19 @@ C              TIMES THE H SERIES OF HERRICKS PARAMETER).
       F(2) = F(2) * BETA2
       F(3) = F(3) * BETA
 C     THIS IS TEST CODE ADDED BY M.HUME IN 2021 FOR TESTING             HUME001C
-  900 FORMAT(5X,4HMGO=,7X,I2)                                           HUME002C
+  900 FORMAT(5X,4HMGO=,7X,I4)                                           HUME002C
   901 FORMAT(5X,2HL=,I20)                                               HUME003C
   902 FORMAT(5X,4HTH2=,3X,D27.20)                                       HUME004C
-      WRITE(6,900) MGO                                                  HUME005C
-      WRITE(6,901) L                                                    HUME006C
-      WRITE(6,902) TH2                                                  HUME007C
-C                                                                       HUME008C
+  903 FORMAT(5X,4HONE=,3X,D27.20)                                       HUME005C
+  904 FORMAT(5X,4H2PI=,3X,D27.20)                                       HUME006C
+  905 FORMAT(5X,5H2PI2=,2X,D27.20)                                      HUME007C
+      WRITE(6,900) MGO                                                  HUME008C
+      WRITE(6,901) L                                                    HUME009C
+      WRITE(6,902) TH2                                                  HUME010C
+      WRITE(6,903) ONE                                                  HUME011C
+      WRITE(6,904) TWOPI                                                HUME011C
+      WRITE(6,905) TWOPI2                                               HUME012C
+C                                                                       HUME013C
       RETURN                                                            FCOM1110
       END                                                               FCOM1120
 $DATA
