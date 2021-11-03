@@ -68,9 +68,13 @@ C
       END
 $IBFTC MAIN    FULIST,DD,NODECK,M94
       INTEGER INDX
+      DOUBLE PRECISION XBETA,OVERA,F,C
       COMMON/BTACON/C(100)
       DIMENSION F(4)
-      DOUBLE PRECISION XBETA,OVERA,F
+      DATA F(1) / 0.0D00/
+      DATA F(2) / 0.0D00/
+      DATA F(3) / 0.0D00/
+      DATA F(4) / 0.0D00/
 C
       XBETA = 0.625D0
       OVERA = -0.971642362847211D0
@@ -112,9 +116,9 @@ C
       WRITE(6,100) INDX, F(INDX)
 C
   500 CONTINUE
-   80 FORMAT(12H     OVERA =,D27.20)
-   90 FORMAT(12H     XBETA =,D27.20)
-  100 FORMAT(5X,1HF,I1,1H=,4X,D27.20)
+   80 FORMAT(12H     OVERA =,D22.16)
+   90 FORMAT(12H     XBETA =,D22.16)
+  100 FORMAT(5X,1HF,I1,1H=,4X,D22.16)
   101 FORMAT(40H****************************************)
        RETURN
        END
@@ -130,7 +134,7 @@ C              TIMES THE H SERIES OF HERRICKS PARAMETER).
       DOUBLE PRECISION XBETA,OVERA,BETA2,BETA
       COMMON/BTACON/C(100)
       EQUIVALENCE ( TH2, L)
-      DATA  ONE, LA, LB / 1.0D0, O000100000000, O1771/                  FCOM0080
+      DATA  ONE, LA, LB / 1.0D0, O001000000000, O173/                   FCOM0080
       DATA TWOPI,TWOPI2 / 6.2831853071795865D0, 39.478417604357434D01 / FCOM0090
       ASSIGN 200 TO LITTLE                                              FCOM0650
       BETA = XBETA
@@ -187,10 +191,10 @@ C              TIMES THE H SERIES OF HERRICKS PARAMETER).
 C     THIS IS TEST CODE ADDED BY M.HUME IN 2021 FOR TESTING             HUME001C
   900 FORMAT(5X,4HMGO=,7X,I4)                                           HUME002C
   901 FORMAT(5X,2HL=,I20)                                               HUME003C
-  902 FORMAT(5X,4HTH2=,3X,D27.20)                                       HUME004C
-  903 FORMAT(5X,4HONE=,3X,D27.20)                                       HUME005C
-  904 FORMAT(5X,4H2PI=,3X,D27.20)                                       HUME006C
-  905 FORMAT(5X,5H2PI2=,2X,D27.20)                                      HUME007C
+  902 FORMAT(5X,4HTH2=,3X,D22.16)                                       HUME004C
+  903 FORMAT(5X,4HONE=,3X,D22.16)                                       HUME005C
+  904 FORMAT(5X,4H2PI=,3X,D22.16)                                       HUME006C
+  905 FORMAT(5X,5H2PI2=,2X,D22.16)                                      HUME007C
       WRITE(6,900) MGO                                                  HUME008C
       WRITE(6,901) L                                                    HUME009C
       WRITE(6,902) TH2                                                  HUME010C
