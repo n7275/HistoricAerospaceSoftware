@@ -11,7 +11,7 @@ https://github.com/rcornwell/I7000tools
 Richard Cornwell's IBM 700/7000 series, and S/360 emulators, forked from the SIMH project.
 https://github.com/rcornwell/sims
 
-### Running Example Jobs on the IBM 7094
+## Running Example Jobs on the IBM 7094
 
 The included example jobs for the IBM 7094 must be loaded onto an input tape in order to run.
 This is done with the above mentioned mkbcdtape which emulates the IBM 1401 software used to write card jobs onto tape.
