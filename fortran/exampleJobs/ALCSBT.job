@@ -1,8 +1,8 @@
 $BLOCK         BCD,0084
 $JOB           ALCSBTTEST
 $EXECUTE       IBJOB
-$IBJOB         GO, MAP, LOGIC, FIOCS
-$IBFTC BLOCDA  FULIST,DD,NODECK,M94
+$IBJOB         GO, MAP, LOGIC 
+$IBFTC BLOCDA  FULIST,DD,NODECK,M94/2,XR7
       BLOCK DATA
 C
 C
@@ -66,7 +66,7 @@ C
      4 5.0000000000000000D-02, 8.3333333333333333D-02,
      5 1.6666666666666667D-01, 5.0000000000000000D-01 /
       END
-$IBFTC MAIN    FULIST,DD,NODECK,M94
+$IBFTC MAIN    FULIST,DD,NODECK,M94/2,XR7
       INTEGER INDX
       DOUBLE PRECISION XBETA,OVERA,F,C
       COMMON/BTACON/C(100)
@@ -116,14 +116,14 @@ C
       WRITE(6,100) INDX, F(INDX)
 C
   500 CONTINUE
-   80 FORMAT(12H     OVERA =,D22.16)
-   90 FORMAT(12H     XBETA =,D22.16)
-  100 FORMAT(5X,1HF,I1,1H=,4X,D22.16)
+   80 FORMAT(12H     OVERA =,D25.16)
+   90 FORMAT(12H     XBETA =,D25.16)
+  100 FORMAT(5X,1HF,I1,1H=,4X,D25.16)
   101 FORMAT(40H****************************************)
        RETURN
        END
 $ENTRY MAIN
-$IBFTC R1      FULIST,DD,NODECK,M94
+$IBFTC R1      FULIST,DD,NODECK,M94/2,XR7
       SUBROUTINE ALCSBT(XBETA,OVERA,F)
 C              THIS ROUTINE TAKES BETA AND THE RECIPROCAL OF THE SEMI-
 C              MAJOR AXIS AND COMPUTES THE G SERIES (POWERS OF BETA
@@ -191,10 +191,10 @@ C              TIMES THE H SERIES OF HERRICKS PARAMETER).
 C     THIS IS TEST CODE ADDED BY M.HUME IN 2021 FOR TESTING             HUME001C
   900 FORMAT(5X,4HMGO=,7X,I4)                                           HUME002C
   901 FORMAT(5X,2HL=,I20)                                               HUME003C
-  902 FORMAT(5X,4HTH2=,3X,D22.16)                                       HUME004C
-  903 FORMAT(5X,4HONE=,3X,D22.16)                                       HUME005C
-  904 FORMAT(5X,4H2PI=,3X,D22.16)                                       HUME006C
-  905 FORMAT(5X,5H2PI2=,2X,D22.16)                                      HUME007C
+  902 FORMAT(5X,4HTH2=,3X,D25.16)                                       HUME004C
+  903 FORMAT(5X,4HONE=,3X,D25.16)                                       HUME005C
+  904 FORMAT(5X,4H2PI=,3X,D25.16)                                       HUME006C
+  905 FORMAT(5X,5H2PI2=,2X,D25.16)                                      HUME007C
       WRITE(6,900) MGO                                                  HUME008C
       WRITE(6,901) L                                                    HUME009C
       WRITE(6,902) TH2                                                  HUME010C
