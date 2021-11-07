@@ -130,8 +130,81 @@ C              FAILED TO GET THE DESIRED RECORD                         JPLE1280
   130 JJ = 0                                                            JPLE1300
       KK = 0                                                            JPLE1310
       IF (IBUF(4) .EQ. IYEAR+1) TTAPE = TTAPE + TUP                     JPLE1320
-  135 DO 140 J = 1,3                                                    JPLE1330
-      L = J + JJ                                                        JPLE1340
-      DO 140 K=1,3                                                      JPLE1350
-  140 DSUN(L,K) = ASUN(J,K)                                             JPLE1360
-      JJ = JJ + 2                                                       JPLE1370
+  135 DO 140 J = 1,3                                                    JPLE1340
+      L = J + JJ                                                        JPLE1350
+      DO 140 K=1,3                                                      JPLE1380
+  140 DSUN(L,K) = ASUN(J,K)                                             JPLE1370
+      JJ = JJ + 2                                                       JPLE1380
+      DO 145 J = JJ + 2                                                 JPLE1390
+      L = J + KK                                                        JPLE1400
+      DO 145 K = 1,15                                                   JPLE1410
+  145 DLUN(L,K) = ALUN(J,K)                                             JPLE1420
+  150 KK = KK + 16                                                      JPLE1430
+C              NORMALIZE TIME TO STARTING TINE OF CORE TABLE            JPLE1440
+  155 TNORM = BASE T + TT- TTAPE                                        JPLE1450
+      IF (TNORM .LT. 0.0D0)  TNORM = TNORM + TDP                        JPLE1460
+      KK = IWANT                                                        JPLE1470
+      IF (KK - 3) 160,165,165                                           JPLE1480
+C              SETUP TO INTERPOLATE FOR SOLAR POSITION                
+  160 T(1) = TNORM/96.0D0                                               JPLE1510
+      KBASE = 0                                                         JPLE1520
+      JBASE = 3                                                         JPLE1530
+      KSTEP = 11                                                        JPLE1540
+      ASSIGN 165 TO ISW                                                 JPLE1550
+      GO TO 250                                                         JPLE1560
+C              SETUP TO INTERPOLATE FOR MOON VECTORS AND/OR MATRIX      JPLE1570
+  165   T(1) = TNORM/12.0D0
+      KBASE = KB(KK)                                                    JPLE1590
+      JBASE = KB(KK)                                                    JPLE1600
+      JNSET = JN(KK)                                                    JPLE1610
+      KSTEP = 81                                                        JPLE1620
+      ASSIGN 170 TO ISW                                                 JPLE1630
+      GO TO 250                                                         JPLE1640
+C              STORE OUTPUT VECTORS                                     JPLE1650
+  170 GO TO (175,195,185,185,205),KK                                    JPLE1660
+  175 DO 180 I=1,3                                                      JPLE1670
+  180 RS(I) = BUFF(I)                                                   JPLE1680
+  185 DO 190 I=1,3                                                      JPLE1790
+      RB(I) = BUFF(I+3)                                                 JPLE1700
+  190 RB(I+6) = BUFF(I+6)                                               JPLE1710
+      IF(KK - 3) 215,205,215                                            JPLE1720
+  195 DO 200 I=1,3                                                      JPLE1730
+      RS(I) = BUFF(I) - BUFF(I+3)                                       JPLE1740
+      RB(I) = -BUFF(I+3)                                                JPLE1750
+  200 RB(I+6) = -BUFF(I+6)                                              JPLE1760
+  205 DO 210 I=1,9                                                      JPLE1770
+  210 PNL(I) = BUFF(I+9)                                                JPLE1780
+      IF(KK - 5) 215,225,225                                            JPLE1790
+  205 RB(5) = RB(1)*RB(1) + RB(2)*RB(2) + RB(3)*RB(3)                   JPLE1800
+      RB(4) = DSQRT(RB(5))                                              JPLE1810
+      RB(6) = RB(4)*RB(5)                                               JPLE1820
+      IF (KK .GE. 3) GO TO 255                                          JPLE1860
+      RS(5) = RS(1)*RS(1) + RS(2)*RS(2) + RS(3)*RS(3)                   JPLE1870
+      RS(4) = DSQRT(RS(5))                                              JPLE1880
+      RS(6) = RS(4)*RS(5)                                               JPLE1890
+  255 IERROR = IERR                                                     JPLE1900
+      RETURN                                                            JPLE1910
+C              INTERPOLATION SECTION (5TH ORDER NEWTON FWD. DIF.)       JPLE1920
+  250 K = T(1) - 2.0D0                                                  
+      T(1) = T(1) - FLOAT(K)
+      K = K + KBASE
+C              CALCUALTE T COEFFICIENTS                                 JPLE1950
+      T(2) = (T(1) - 1.0D0)*T(1)/2.0D0
+      T(3) = (T(1) - 2.0D0)*T(2)/2.0D0
+      T(4) = (T(1) - 3.0D0)*T(3)/2.0D0
+      T(5) = (T(1) - 4.0D0)*T(4)/2.0D0
+C              DIFERENCE 3 POINTS ON EITHER SIDE OF IND. VARIABLE       JPLE2010
+      DO 255 J=JBASE,JNSET                                              JPLE2020
+      DY(1) = TAB(K+2)-TAB(K+1)                                         JPLE2030
+      DY(2) = TAB(K+3)-TAB(K+2)-DY(1)                                   JPLE2040
+      DY(3) = TAB(K+4)-TAB(K+3)-TAB(K+3)+TAB(k+2)-DY(2)                 JPLE2050
+      DY(4) = TAB(K+5)-3.*(TAB(K+4)-TAB(K+3))-TAB(K+2)-DY(3)            JPLE2060
+      DY(5) = TAB(K+6)-4.*(TAB(K+5)+TAB(K+3))+6.*TAB(K+4)+TAB(K+2)-DY(4)JPLE2070
+C              AND INTERPOLATE IN EACH TABLE                            JPLE2080
+      BUFF(J) = TAB(K+1) + T(1)*DY(1) + T(2)*DY(2) + T(3)*DY(3)         JPLE2090
+     1                   + T(4)*DY(4) + T(5)*DY(5)                      JPLE2100
+  255 K = K + KSTEP                                                     JPLE2110
+C              BRANCH BACK                                              JPLE2120
+      GO TO ISW,(165,170)                                               JPLE2030
+      END                                                               JPLE2140
+
