@@ -20,6 +20,17 @@ C                                                                       GJI00450
        COMMON / GJACON / CO(4) , DO(7) , COEFY(14) , COEFYP(14)
       DOUBLE PRECISION C,DARRAY,HARRAY
       COMMON / BTACON / C(100)
+      DOUBLE PRECISION P, CMU, D, SEMU, SMMU, SEDR, DKO, KRHO, PTAMB,
+     1 TDT, CSA, WT
+      COMMON /PMT/ MPTAB(7), PTAMB(7,8), TDT, KI, CSA, WT
+      COMMON /PROPVC/ P(6,6), CMU(6,2), D(2,2), SEMU, SMMU, SEDR, DKO,
+     1 KRHO
+      DATA SEMU / 0.150-3/, SMMU / 0.1D-4/, SEDR / 0.6D0/, DKO / 0.2D0/,
+     1 KRHO / 1.0D0/, TDT / 0.277777D-3/, KI / 30/
+      DATA (MPTAB(I),I=1,7) / 5HS-IVB, 6HSIVP-U, 3HSPS, 6HSM RCS,
+     1 6HCM RCS, 6HL, ASC, 6HLM DES/
+      DATA ((PTABM(I,J),J=1,8),I=1,7) /0.205D6,0.17283372D7,-400.0D0,
+     1 1.03D0,2.2D-3,2.3D-4,400.0D0,0.03D0,1139.0D0,0.6552D5,-400.0D0,
 C
 C
       DATA (C(M),M=1,18) /                                              FCOM0100
