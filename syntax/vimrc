@@ -1,0 +1,8 @@
+"IBMAP (IBM709/7090/7094 MACRO ASSEMBLER)
+augroup ibmap
+    au!
+    autocmd BufNewFile,BufRead *.ibmap set syntax=ibmap
+    autocmd BufNewFile,BufRead *.ibmap set colorcolumn=7,15,73,80
+    autocmd BufNewFile,BufRead *.ibmap set nosmarttab
+    autocmd BufNewFile,BufRead *.ibmap hi ColorColumn ctermbg=DarkBlue
+augroup end
